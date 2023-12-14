@@ -1,4 +1,3 @@
-# Put your app in here.
 
 from flask import Flask, request 
 from operations import *
@@ -36,3 +35,21 @@ def div_numbers():
     b = int(numbers['b'])
     output = div(a,b)
     return str(output)
+
+@app.route("/math/<operator>")
+def all_in_one(operator):
+    operator = operator.lower()
+    numbers = request.args
+    a = int(numbers['a'])
+    b = int(numbers['b'])
+
+    dct = {
+        'add': add(a,b),
+        'sub': sub(a,b),
+        'mult': mult(a,b),
+        'div': div(a,b)
+    }
+
+    operation = dct.get(operator)
+    return str(operation)
+    
